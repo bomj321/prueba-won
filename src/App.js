@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Router } from "@reach/router";
+import { Home } from "./pages/Home";
+import { Dashboard } from "./pages/Dashboard";
+import { GlobalStyle } from "./styles/GlobalStyles";
+import useToken from "./hooks/useToken";
 
-function App() {
+export const App = () => {
+  const { token, setToken } = useToken();
+  if (!token) {
+    return (
+      <>
+        <GlobalStyle /> <Home setToken={setToken} path="/" />
+      </>
+    );
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Router>
+        <Dashboard path="/" />
+      </Router>
+    </>
   );
-}
-
-export default App;
+};
